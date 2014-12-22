@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.8</ProductVersion>
+    <ProjectGuid>972bc342-6871-4aee-9cfb-878a68d79445</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>Azure.DataCenterMigration_x64</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <Name>x64InstallerSetup</Name>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+    <SuppressValidation>True</SuppressValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AzureDataCenterMigration_x64.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Azure.DataCenterMigration.App\Azure.DataCenterMigration.App.csproj">
+      <Name>Azure.DataCenterMigration.App</Name>
+      <Project>{a587fbbd-e6cd-48c7-8349-e10ff00e2092}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure.DataCenterMigration.DatabaseLogSetup\Azure.DataCenterMigration.DatabaseLogSetup.csproj">
+      <Name>Azure.DataCenterMigration.DatabaseLogSetup</Name>
+      <Project>{6526a1ae-59fc-4dbd-b24c-7219bdc0ea2a}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure.DataCenterMigration.Models\Azure.DataCenterMigration.Models.csproj">
+      <Name>Azure.DataCenterMigration.Models</Name>
+      <Project>{13cad85e-727f-4ead-b94b-3e6719589d5a}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure.DataCenterMigration.VerifySQLConnection\Azure.DataCenterMigration.VerifySQLConnection.csproj">
+      <Name>Azure.DataCenterMigration.VerifySQLConnection</Name>
+      <Project>{dca90369-092c-49a2-9f2a-b1c6d2142c3f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure.DataCenterMigration\Azure.DataCenterMigration.csproj">
+      <Name>Azure.DataCenterMigration</Name>
+      <Project>{f1c2a29c-0a2f-4cc1-9898-c35ee886d901}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixSqlExtension">
+      <HintPath>$(WixExtDir)\WixSqlExtension.dll</HintPath>
+      <Name>WixSqlExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixVSExtension">
+      <HintPath>$(WixExtDir)\WixVSExtension.dll</HintPath>
+      <Name>WixVSExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Documents\License.rtf">
+      <Link>License.rtf</Link>
+    </Content>
+    <Content Include="packages.config" />
+    <Content Include="WAIcon.ico" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <MakeDir Directories="$(IntermediateOutputPath)Harvested XML" />
+    <MakeDir Directories="$(IntermediateOutputPath)Harvested Output" />
+    <XslTransformation XmlInputPaths="XSLT\RegisterForCOM.xml" XslInputPath="XSLT\XslRegisterForCOM.xslt" OutputPaths="$(IntermediateOutputPath)_COMFiles.txt" Parameters="&lt;Parameter Name='operationType' Value='HeatFiles'/&gt;&lt;Parameter Name='intermediateDir' Value='$(IntermediateOutputPath)'/&gt;" />
+    <ReadLinesFromFile File="$(IntermediateOutputPath)_COMFiles.txt">
+      <Output TaskParameter="Lines" ItemName="COMFilelist" />
+    </ReadLinesFromFile>
+    <ConvertToAbsolutePath Paths="@(COMFilelist)">
+      <Output TaskParameter="AbsolutePaths" ItemName="ResolvedCOMFilelist" />
+    </ConvertToAbsolutePath>
+    <Exec Command="&quot;$(Wix)Bin\heat.exe&amp;quot; file &quot;%(ResolvedCOMFilelist.Identity)&quot; -sw -gg -sfrag -nologo -srd -out &quot;$(IntermediateOutputPath)Harvested XML\_%(Filename).com.xml&quot;" IgnoreExitCode="false" WorkingDirectory="$(MSBuildProjectDirectory)" Condition="'%(ResolvedCOMFilelist.Identity)'!=''" />
+    <XslTransformation XmlInputPaths="XSLT\RegisterForCOM.xml" XslInputPath="XSLT\XslRegisterForCOM.xslt" OutputPaths="$(IntermediateOutputPath)_COMFiles.txt" Parameters="&lt;Parameter Name='operationType' Value='TransformFiles'/&gt;&lt;Parameter Name='intermediateDir' Value='$(IntermediateOutputPath)Harvested XML'/&gt;" />
+    <ReadLinesFromFile File="$(IntermediateOutputPath)_COMFiles.txt">
+      <Output TaskParameter="Lines" ItemName="XMLFileList" />
+    </ReadLinesFromFile>
+    <XslTransformation XmlInputPaths="%(XMLFileList.Identity)" XslInputPath="XSLT\XslFile.xslt" OutputPaths="$(IntermediateOutputPath)Harvested Output\%(Filename).wsx" Parameters="&lt;Parameter Name='sourceFilePath' Value='%(XMLFileList.Identity)'/&gt;" Condition="'%(XMLFileList.Identity)'!=''" />
+    <Exec Command="&quot;$(Wix)Bin\heat.exe&quot; project &quot;%(ProjectReference.FullPath)&quot; -projectname &quot;%(ProjectReference.Name)&quot; -pog %(ProjectReference.RefProjectOutputGroups) -gg -sfrag -nologo -out &quot;$(IntermediateOutputPath)Harvested XML\_%(ProjectReference.Name).xml&quot;" IgnoreExitCode="false" WorkingDirectory="$(MSBuildProjectDirectory)" Condition="'%(ProjectReference.FullPath)'!='' And '%(ProjectReference.DoNotHarvest)'!='True' And '%(ProjectReference.ImportedFromVDProj)'=='True'" />
+    <HeatProject Project="%(ProjectReference.FullPath)" ProjectName="%(ProjectReference.Name)" OutputFile="$(IntermediateOutputPath)Harvested XML\_%(ProjectReference.Name).xml" ProjectOutputGroups="%(ProjectReference.RefProjectOutputGroups)" ToolPath="$(Wix)Bin\" SuppressAllWarnings="true" AutogenerateGuids="false" GenerateGuidsNow="true" SuppressFragments="true" SuppressUniqueIds="false" Condition="'%(ProjectReference.FullPath)'!='' And '%(ProjectReference.DoNotHarvest)'!='True' And '%(ProjectReference.ImportedFromVDProj)'!='True'" />
+    <XslTransformation XmlInputPaths="$(IntermediateOutputPath)Harvested XML\_%(ProjectReference.Name).xml" XslInputPath="XSLT\XslProjectOutput.xslt" OutputPaths="$(IntermediateOutputPath)Harvested Output\_%(ProjectReference.Name).wxs" Parameters="&lt;Parameter Name='projectName' Value='%(ProjectReference.Name)'/&gt;&lt;Parameter Name='projectFilePath' Value='%(ProjectReference.FullPath)'/&gt;&lt;Parameter Name='intermediateDir' Value='$(IntermediateOutputPath)Harvested Output\'/&gt;" Condition="'%(ProjectReference.FullPath)'!='' And '%(ProjectReference.DoNotHarvest)'!='True' And Exists('$(IntermediateOutputPath)Harvested XML\_%(ProjectReference.Name).xml')" />
+    <XslTransformation XmlInputPaths="XSLT\RegisterForCOM.xml" XslInputPath="XSLT\XslRegisterForCOM.xslt" OutputPaths="$(IntermediateOutputPath)_COMFiles.txt" Parameters="&lt;Parameter Name='operationType' Value='CompileFiles'/&gt;&lt;Parameter Name='intermediateDir' Value='$(IntermediateOutputPath)Harvested Output\'/&gt;" />
+    <ReadLinesFromFile File="$(IntermediateOutputPath)_COMFiles.txt">
+      <Output TaskParameter="Lines" ItemName="WSXFileList" />
+    </ReadLinesFromFile>
+    <CreateItem Include="$(IntermediateOutputPath)Harvested Output\_%(ProjectReference.Name).wxs" Condition="'%(ProjectReference.FullPath)'!='' And '%(ProjectReference.DoNotHarvest)'!='True' And Exists('$(IntermediateOutputPath)Harvested Output\_%(ProjectReference.Name).wxs')">
+      <Output TaskParameter="Include" ItemName="Compile" />
+    </CreateItem>
+    <CreateItem Include="@(WSXFileList)" Condition="Exists('%(WSXFileList.Identity)')">
+      <Output TaskParameter="Include" ItemName="Compile" />
+    </CreateItem>
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent />
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

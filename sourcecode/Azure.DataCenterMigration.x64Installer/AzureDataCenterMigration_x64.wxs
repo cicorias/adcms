@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*******************************************************************************
+ * Copyright 2014 Persistent Systems Ltd.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension" xmlns:adx="http://schemas.add-in-express.com/wixdesigner" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension" xmlns:DataSource="http://schemas.appsecinc.com/wix/DataSourceExtension">
+
+  <!--Variables -->
+  <?define appName="Azure Data Center Migration 1.0" ?>
+  <?define SourceCode = "..\..\SourceCode"?>
+  <?define Documents = "..\..\Documents"?>
+
+  <Product Id="*" Name="$(var.appName)" Language="1033" Version="1.0.0.0" Manufacturer="Persistent Systems Ltd." UpgradeCode="ca471108-8763-4e3b-bf96-310470d940a5" Codepage="1252">
+    <Package Id="*" Platform="x64" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" SummaryCodepage="1252"/>
+    <Binary Id="InstallUtil" SourceFile="Resources\Binary\InstallUtil" />
+    <Binary Id="ADXDPCADLL" SourceFile="Resources\Binary\adxdpca64.dll" />
+    <Binary Id="InstallUtilConfig" SourceFile="Resources\Binary\InstallUtilConfig" />
+    <Binary Id="TestSQLConnection" SourceFile="$(var.Azure.DataCenterMigration.VerifySQLConnection.TargetDir)Azure.DataCenterMigration.VerifySQLConnection.CA.dll"/>
+    <CustomAction Id="CA_CreateConfig" BinaryKey="ADXDPCADLL" DllEntry="GetConfig" />
+    <Media Id="1" Cabinet="AzureDataCenterMigration_x64.cab" EmbedCab="yes" DiskPrompt="CD-ROM #1" />
+    <Property Id="DiskPrompt" Value="64-bit Launchpad Installation [1]" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."  Schedule="afterInstallValidate" />
+
+    <Feature Id="ProductFeature" Title="AzureDataCenterMigration_x64" Level="1">
+      <ComponentGroupRef Id="Bin" />
+      <ComponentGroupRef Id="Documents"/>
+      <ComponentRef Id="Logs" />
+      <ComponentGroupRef Id="PowerShellCmdlets"/>
+      <ComponentGroupRef Id="PowerShellCmdletsBin"/>
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+
+    <!--Check .NET Framework 4.5 prerequisites-->
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <CustomActionRef Id="WixFailWhenDeferred" />
+    <Condition Message="This setup requires Microsoft .NET Framework 4.5 package or greater needs to be installed for this installation to continue."><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
+
+    <!--Installer UI setup-->
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTDIRECTORY" />
+    <Property Id="SERVERNAME" Secure="yes" ></Property>
+    <Property Id="DATABASENAME" Secure="yes"></Property>
+    <Property Id="DBUSERNAME" Secure="yes"></Property>
+    <Property Id="PASSWORD" Secure="yes"></Property>
+    <Property Id="SQL_REQUIRED" Secure="yes"></Property>
+    <Property Id="ODBC_CONNECTION_ESTABLISHED" Secure="yes"/>
+    <Property Id="ODBC_ERROR" Secure="yes"></Property>
+
+    <UI Id="CustomWixUI_InstallDir">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="InstallDir" />
+      <Property Id="DBAUTH" Value="0"></Property>
+
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">NOT Installed</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="iDTADlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID="1"]]></Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+
+
+      <!--Code added for custom dialog-->
+      <Dialog Id="iDTADlg" Width="370" Height="350" Title="Database Server Connection Details">
+
+        <Control Id="Back" Type="PushButton" X="180" Y="325" Width="56" Height="17" Text="Back">
+          <Publish Event="NewDialog" Value="InstallDirDlg">1</Publish>
+        </Control>
+
+        <Control Id="Cancel" Type="PushButton" X="304" Y="325" Width="56" Height="17" Cancel="yes" Text="Cancel ">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="{\WixUI_Font_Title}SQL Database Logging" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Connection details of the SQL database." />
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="322" Width="370" Height="0" />
+
+        <Control Id="FeatureX" Type="CheckBox" X="20" Y="50" Width="140" Height="17" CheckBoxValue="1" Property="SQL_REQUIRED" Text="Enable SQL Server Logging" >
+
+        </Control>
+
+        <Control Id="AuthenticationDB" Type="RadioButtonGroup" X="20" Y ="68" Height="45" Width="140" Property ="DBAUTH" Text="Authentication">
+          <RadioButtonGroup Property="DBAUTH">
+            <RadioButton Value="0" Text="Windows Authentication" X="20" Y="0"  Height="17" Width="140"/>
+            <RadioButton Value="1" Text="SQL Server Authentication" X="20" Y="20" Height="17" Width="140"/>
+          </RadioButtonGroup>
+          <Condition Action="disable"><![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+        </Control>
+        <Control Id="DBServer" Type="Text" X="20" Y="125" Width="290" Height="13" NoPrefix="yes" Text="Name of the SQL Server Instance" >
+          <Condition Action="disable"><![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+          <Publish Property="LOGON_VALID" Value="0">1</Publish>
+        </Control>
+        <Control Id="DBSText" Type="Edit" X="20" Y="137" Width="290" Height="20" Property="SERVERNAME" >
+          <Condition Action="disable"><![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+        </Control>
+        <Control Id="DBName" Type="Text" X="20" Y="159" Width="290" Height="13" NoPrefix="yes" Text="Database Name" >
+          <Condition Action="disable"><![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+        </Control>
+        <Control Id="DBIText" Type="Edit" X="20" Y="171" Width="290" Height="20" Property="DATABASENAME" >
+          <Condition Action="disable"><![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+        </Control>
+        <Control Id="DBUserName" Type="Text" X="20" Y="193" Width="290" Height="13" NoPrefix="yes" Text="User Name">
+          <Condition Action="disable">DBAUTH = 0 OR <![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1 AND DBAUTH = 1</Condition>
+        </Control>
+        <Control Id="DBUNText" Type="Edit" X="20" Y="208" Width="290" Height="20" Property="DBUSERNAME">
+          <Condition Action="disable">DBAUTH = 0 OR <![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1 AND DBAUTH = 1</Condition>
+          <Publish Property="LOGON_VALID" Value="0">1</Publish>
+        </Control>
+        <Control Id="DBpassword" Type="Text" X="20" Y="229" Width="290" Height="13" NoPrefix="yes" Text="Password" >
+          <Condition Action="disable">DBAUTH = 0 OR <![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1 AND DBAUTH = 1</Condition>
+        </Control>
+        <Control Id="DBPWText" Type="Edit" X="20" Y="241" Width="290" Height="20" Property="PASSWORD" Password="yes">
+          <Condition Action="disable">DBAUTH = 0 OR <![CDATA[SQL_REQUIRED <> 1]]></Condition>
+          <Condition Action="enable">SQL_REQUIRED=1 AND DBAUTH = 1</Condition>
+        </Control>
+        <Control Id="TestConnection" Type="PushButton" X="20" Y="300" Width="175" Height="17" Default="yes" Text="Test SQL Connection">
+          <Condition Action="disable" >(<![CDATA[SQL_REQUIRED <> 1]]>)</Condition>
+          <Condition Action="enable">SQL_REQUIRED=1</Condition>
+          <Publish Event="DoAction" Value="ServerName">SQL_REQUIRED=1</Publish>
+          <Publish Event="DoAction" Value="DataBaseName">SQL_REQUIRED=1</Publish>
+          <Publish Event="DoAction" Value="UserName">DBAUTH = 1</Publish>
+          <Publish Event="DoAction" Value="Password">DBAUTH = 1</Publish>
+          <Publish Event="DoAction" Value="VerifySqlConnectionCA">1</Publish>
+
+          <Publish Property="LOGON_VALID" Value="1" Order="4"><![CDATA[ODBC_CONNECTION_ESTABLISHED]]></Publish>
+          <Publish Property="LOGON_VALID" Value="0" Order="4"><![CDATA[NOT ODBC_CONNECTION_ESTABLISHED]]></Publish>
+          <Publish Property="LOGON_ERROR" Value="Unexpected Error" Order="4"><![CDATA[(NOT ODBC_CONNECTION_ESTABLISHED) AND (ODBC_ERROR = "")]]></Publish>
+          <Publish Property="LOGON_ERROR" Value="[ODBC_ERROR]" Order="4"><![CDATA[NOT ODBC_CONNECTION_ESTABLISHED]]></Publish>
+
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="325" Width="56" Height="17" Default="yes" Text="Next">
+          <Publish Event="DoAction" Value="ServerName">SQL_REQUIRED=1</Publish>
+          <Publish Event="DoAction" Value="DataBaseName">SQL_REQUIRED=1</Publish>
+          <Publish Event="DoAction" Value="UserName">DBAUTH = 1</Publish>
+          <Publish Event="DoAction" Value="Password">DBAUTH = 1</Publish>
+          <Publish Event="DoAction" Value="VerifySqlConnectionCA">SQL_REQUIRED=1</Publish>
+
+          <Publish Property="LOGON_VALID" Value="1" Order="4"><![CDATA[ODBC_CONNECTION_ESTABLISHED]]></Publish>
+          <Publish Property="LOGON_VALID" Value="0" Order="4"><![CDATA[NOT ODBC_CONNECTION_ESTABLISHED]]></Publish>
+          <Publish Property="LOGON_ERROR" Value="Unexpected Error" Order="4"><![CDATA[(NOT ODBC_CONNECTION_ESTABLISHED) AND (ODBC_ERROR = "")]]></Publish>
+          <Publish Property="LOGON_ERROR" Value="[ODBC_ERROR]" Order="4"><![CDATA[NOT ODBC_CONNECTION_ESTABLISHED]]></Publish>
+
+          <Publish Event="NewDialog" Value="VerifyReadyDlg">(<![CDATA[ODBC_ERROR <> 1]]> AND SQL_REQUIRED=1) OR (<![CDATA[SQL_REQUIRED <> 1]]>)</Publish>
+
+        </Control>
+      </Dialog>
+
+
+      <!--End of custom dialog-->
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="iDTADlg" Order="1">NOT Installed</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+      <Property Id="ARPNOMODIFY" Value="1" />
+
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="DoAction"
+               Value="DatabaseLogSetup">SQL_REQUIRED = 1 and NOT Installed</Publish>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+    <!--<UIRef Id="WixUI_Minimal" />-->
+    <!-- Sets the connection string Required for the SQL database Logging-->
+
+    <Property Id="SQLCONNECTIONSTRING" Secure="yes"></Property>
+    <SetProperty Action="WindowsAuthenticationConnString" After="DIRCA_TARGETDIR" Id="SQLCONNECTIONSTRING" Value="data source=[SERVERNAME];Integrated Security=SSPI;initial catalog=[DATABASENAME];">DBAUTH = 0</SetProperty>
+    <SetProperty Action="SQLAuthenticationConnString" After="DIRCA_TARGETDIR" Id="SQLCONNECTIONSTRING" Value="data source=[SERVERNAME];initial catalog=[DATABASENAME];user id=[DBUSERNAME];password=[PASSWORD];">DBAUTH = 1</SetProperty>
+
+    <CustomAction Id="ServerName" Property="ServerName" Value="[SERVERNAME]"></CustomAction>
+    <CustomAction Id="DataBaseName" Property="DATABASENAME" Value="[DATABASENAME]"></CustomAction>
+    <CustomAction Id="UserName" Property="DBUSERNAME" Value="[DBUSERNAME]"></CustomAction>
+    <CustomAction Id="Password" Property="PASSWORD" Value="[PASSWORD]"></CustomAction>
+
+    <CustomAction Id="VerifySqlConnectionCA"
+         BinaryKey="TestSQLConnection"
+         DllEntry="VerifySqlConnection"
+         Execute="immediate"
+         Return="check" />
+
+
+    <!--Custom License Agreement -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.Documents)\License.rtf" Overridable="yes" />
+    <!--Set  Installer's Icon in Add/Remove Programs-->
+    <Icon Id="icon.ico" SourceFile="WAIcon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Component Id="Logs" Guid="{62B2973A-8865-4638-9179-33F49565C327}" Win64="yes" Directory="DCLOGS">
+      <CreateFolder Directory="DCLOGS"></CreateFolder>
+    </Component>
+    <InstallExecuteSequence>
+      <Custom Action="CA_CreateConfig" Sequence="1" />
+      <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR = ""]]></Custom>
+    </InstallExecuteSequence>
+
+    <UI>
+      <Error Id="1001"><![CDATA[Error [1]. [2]]]></Error>
+    </UI>
+
+    <InstallUISequence>
+      <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR = ""]]></Custom>
+    </InstallUISequence>
+    <CustomAction Id="DIRCA_TARGETDIR" Property="TARGETDIR" Value="[ProgramFiles64Folder]" Execute="firstSequence" />
+
+    <Property Id="QtExecCmdLine" Value="&quot;[#Azure.DataCenterMigration.DatabaseLogSetup.exe]&quot;"/>
+    <CustomAction Id="DatabaseLogSetup" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="immediate" Return="check" Impersonate="no" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="APPLICATIONROOTDIRECTORY" Name="$(var.appName)">
+        <Directory Id="DCBIN" Name="bin">
+        </Directory>
+        <Directory Id="DCLOGS" Name="Logs">
+        </Directory>
+        <Directory Id ="POWERSHELL" Name="PowerShellCmdlets">
+          <Directory Id="PowerShellScripts" Name="Azure.DataCenterMigration">
+            <Directory Id="PowerShellScriptsBin" Name="bin"></Directory>
+          </Directory>
+        </Directory>
+        <Directory Id ="Documents" Name="Documents"></Directory>
+            </Directory>
+      <!-- Step 1: Define the directory structure -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.appName)" />
+      </Directory>
+    </Directory>
+
+  </Fragment>
+
+
+  <Fragment>
+    <!-- Step 2: Add the shortcut to installer package -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="{ED806B8E-DF0D-4802-93F8-532C86ECC4BD}" Win64="yes">
+        <Shortcut Id="ApplicationShortcutBin" Name="$(var.appName) bin" Description="$(var.appName) bin" Target="[DCBIN]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
+          <Icon Id="iconbin" SourceFile="WAIcon.ico" />
+        </Shortcut>
+        <Shortcut Id="ApplicationShortcutPowerShell" Name="$(var.appName) PowerShell Cmdlets" Description="$(var.appName) PowerShell Cmdlets" Target="[POWERSHELL]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
+          <Icon Id="iconuser" SourceFile="WAIcon.ico" />
+        </Shortcut>
+        <Shortcut Id="ApplicationShortcutLogs" Name="$(var.appName) Logs" Description="$(var.appName) Logs" Target="[DCLOGS]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
+          <Icon Id="iconlogs" SourceFile="WAIcon.ico" />
+        </Shortcut>
+        <Shortcut Id="ApplicationShortcutDocuments" Name="$(var.appName) Documents" Description="$(var.appName) Documents" Target="[Documents]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
+          <Icon Id="icondocuments" SourceFile="WAIcon.ico" />
+        </Shortcut>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\$(var.appName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+
+  <Fragment>
+
+    <ComponentGroup Id="Bin" Directory="DCBIN">
+
+      <!--Project references-->
+      <!--Azure.DataCenterMigration.App.exe-->
+      <Component Id="Azure.DataCenterMigration.App.exe" Guid="{20219C5A-2762-495C-B4AA-5E81DE1011CC}" Win64="yes">
+        <File Id="Azure.DataCenterMigration.App.exe" Source="$(var.Azure.DataCenterMigration.App.TargetPath)" >
+        </File>
+        <!--Config file references-->
+        <!--Azure.DataCenterMigration.App.exe.config-->
+        <File Id="Azure.DataCenterMigration.App.exe.config" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"  >
+        </File>
+        <File Id="Azure.DataCenterMigration.DatabaseLogSetup.exe" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)"></File>
+        <File Id="Azure.DataCenterMigration.DatabaseLogSetup.exe.config"  Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)"></File>
+        <File Id="EntityFramework.dll" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)"></File>
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)"></File>
+        <!--Azure.DataCenterMigration.dll-->
+        <File Id="Azure.DataCenterMigration.dll" Source="$(var.Azure.DataCenterMigration.TargetPath)" ></File>
+        <!--Azure.DataCenterMigration.Models.dll-->
+        <File Id="Azure.DataCenterMigration.Models.dll" Source="$(var.Azure.DataCenterMigration.Models.TargetPath)" ></File>
+        <!--NuGet Packages and libraries-->
+        <!--Microsoft.Threading.Tasks.dll-->
+        <File Id="Microsoft.Threading.Tasks.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <!--Microsoft.WindowsAzure.Common.dll-->
+        <File Id="Microsoft.WindowsAzure.Common.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <!--Microsoft.WindowsAzure.Common.NetFramework.dll-->
+        <File Id="Microsoft.WindowsAzure.Common.NetFramework.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Microsoft.WindowsAzure.Management.dll-->
+        <File Id="Microsoft.WindowsAzure.Management.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <!--Microsoft.WindowsAzure.Management.Compute.dll-->
+        <File Id="Microsoft.WindowsAzure.Management.Compute.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Microsoft.Data.Edm.dll-->
+        <File Id="Microsoft.Data.Edm.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Microsoft.Data.OData.dll-->
+        <File Id="Microsoft.Data.OData.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Microsoft.Data.Services.Client.dll-->
+        <File Id="Microsoft.Data.Services.Client.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--System.Spatial.dll-->
+        <File Id="System.Spatial.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Microsoft.WindowsAzure.Management.Network.dll-->
+        <File Id="Microsoft.WindowsAzure.Management.Network.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+        <!--Newtonsoft.Json.dll-->
+        <File Id="Newtonsoft.Json.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <File Id="Microsoft.WindowsAzure.Storage.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <File Id="Microsoft.WindowsAzure.Management.Storage.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)"></File>
+        <File Id="log4net.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)" ></File>
+      </Component>
+
+      <!--Component to make changes to the App.config file only when SQL logging is required-->
+      <Component Id ="SQL" Guid="{0cfb0be1-dbb6-496f-a567-bfe9aac01e55}" Win64="yes">
+        <Condition>SQL_REQUIRED=1</Condition>
+        <util:XmlFile   File="[DCBIN]\Azure.DataCenterMigration.App.exe.config"
+                        Id="Log4netConnectionString"
+                        Action="setValue"
+                        ElementPath="/configuration/log4net/appender/connectionString/@value"
+                        Value="[SQLCONNECTIONSTRING]"
+                        SelectionLanguage="XPath"
+                        Sequence="1"  />
+
+
+        <util:XmlFile   File="[DCBIN]\Azure.DataCenterMigration.DatabaseLogSetup.exe.config"
+                        Id="Log4netDBConnectionString"
+                        Action="setValue"
+                        ElementPath="/configuration/connectionStrings/add/@connectionString"
+                        Value="[SQLCONNECTIONSTRING]"
+                        SelectionLanguage="XPath"
+                        Sequence="1"  />
+
+        <util:XmlConfig   Id="AdoNetAppender"
+                          File= "[DCBIN]\Azure.DataCenterMigration.App.exe.config"
+                          Action="delete"
+                          ElementPath="/configuration/log4net/root"
+                          VerifyPath="/configuration/log4net/root/comment()"
+                          Node="element"
+                          On="install" />
+
+
+        <util:XmlFile   Id='AppenderRef'
+                        Action="createElement"
+                        ElementPath="/configuration/log4net/root"
+                        Name="appender-ref"
+                        File= "[DCBIN]\Azure.DataCenterMigration.App.exe.config"
+                        SelectionLanguage="XPath" Permanent="no" ></util:XmlFile>
+
+        <util:XmlFile   Id='ref'
+                        Action="setValue"
+                        ElementPath="/configuration/log4net/root/appender-ref[\[]not(@ref)[\]]"
+                        Name="ref"
+                        Value="AdoNetAppender"
+                        File= "[DCBIN]\Azure.DataCenterMigration.App.exe.config"
+                        SelectionLanguage="XPath" />
+      </Component>
+
+    </ComponentGroup>
+
+    <!--Component to create PowerShellCmdlets folder-->
+    <ComponentGroup Id="PowerShellCmdlets" Directory="PowerShellScripts">
+      <Component Id="Azure.DataCenterMigration" Guid="{f4320825-cae2-444f-9e3c-411f4ef86e30}" Win64="yes">
+        <File Id="Azure.DataCenterMigration.psm1" Source="$(var.SourceCode)\PowerShellCmdlets\Azure.DataCenterMigration\"></File>
+        <File Id="Constants.ps1" Source="$(var.SourceCode)\PowerShellCmdlets\Azure.DataCenterMigration\"></File>
+      </Component>
+    </ComponentGroup>
+
+    <!--bin folder within PowerShellCmdlets-->
+    <ComponentGroup Id="PowerShellCmdletsBin" Directory="PowerShellScriptsBin">
+      <Component Id="PowerShellCmdletsBin" Guid="{b12a9e02-6999-4937-b71a-a07a4b7b05e8}" Win64="yes">
+        <File Id="app.exe.config" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Azure.DataCenterMigration.App.exe.config"></File>
+        <File Id="Dbsetup.exe" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)\Azure.DataCenterMigration.DatabaseLogSetup.exe"></File>
+        <File Id="Dbsetup.exe.config"  Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)\Azure.DataCenterMigration.DatabaseLogSetup.exe.config"></File>
+        <File Id="PsEntityFramework.dll" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)\EntityFramework.dll"></File>
+        <File Id="PsEntityFramework.SqlServer.dll" Source="$(var.Azure.DataCenterMigration.DatabaseLogSetup.TargetDir)\EntityFramework.SqlServer.dll"></File>
+        <File Id="PsAzure.DataCenterMigration.dll" Source="$(var.Azure.DataCenterMigration.TargetPath)"></File>
+        <File Id="PsAzure.DataCenterMigration.Models.dll" Source="$(var.Azure.DataCenterMigration.Models.TargetPath)"></File>
+        <File Id="PsMicrosoft.Threading.Tasks.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.Threading.Tasks.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Common.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Common.dll"> </File>
+        <File Id="PsMicrosoft.WindowsAzure.Common.NetFramework.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Common.NetFramework.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Management.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Management.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Management.Compute.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Management.Compute.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Management.Network.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Management.Network.dll"></File>
+        <File Id="PsNewtonsoft.Json.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Newtonsoft.Json.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Storage.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Storage.dll"></File>
+        <File Id="PsMicrosoft.WindowsAzure.Management.Storage.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.WindowsAzure.Management.Storage.dll"></File>
+        <File Id="Pslog4net.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\log4net.dll"></File>
+        <File Id="PsMicrosoft.Data.Edm.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.Data.Edm.dll" ></File>
+        <File Id="PsMicrosoft.Data.OData.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.Data.OData.dll" ></File>
+        <File Id="PsMicrosoft.Data.Services.Client.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\Microsoft.Data.Services.Client.dll" ></File>
+        <File Id="PsSystem.Spatial.dll" Source="$(var.Azure.DataCenterMigration.App.TargetDir)\System.Spatial.dll" ></File>
+      </Component>
+      <Component Id ="SQLPS" Guid="{4ffb0201-a53a-44a4-b46b-6bb068f347a2}" Win64="yes">
+        <Condition>SQL_REQUIRED=1</Condition>
+
+        <util:XmlFile   File="[Bin]\Azure.DataCenterMigration.App.exe.config"
+                        Id="Log4netConnectionStringPS"
+                        Action="setValue"
+                        ElementPath="/configuration/log4net/appender/connectionString/@value"
+                        Value="[SQLCONNECTIONSTRING]"
+                        SelectionLanguage="XPath"
+                        Sequence="1"  />
+
+        <util:XmlFile   File="[Bin]\Azure.DataCenterMigration.DatabaseLogSetup.exe.config"
+                        Id="Log4netDBConnectionStringPS"
+                        Action="setValue"
+                        ElementPath="/configuration/connectionStrings/add/@connectionString"
+                        Value="[SQLCONNECTIONSTRING]"
+                        SelectionLanguage="XPath"
+                        Sequence="1"  />
+
+        <util:XmlConfig   Id="AdoNetAppenderPS"
+                          File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                          Action="delete"
+                          ElementPath="/configuration/log4net/root"
+                          VerifyPath="/configuration/log4net/root/comment()"
+                          Node="element"
+                          On="install" />
+
+        <util:XmlFile   Id='AppenderRefPS'
+                        Action="createElement"
+                        ElementPath="/configuration/log4net/root"
+                        Name="appender-ref"
+                        File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                        SelectionLanguage="XPath"/>
+
+        <util:XmlFile   Id='refPS'
+                        Action="setValue"
+                        ElementPath="/configuration/log4net/root/appender-ref[\[]not(@ref)[\]]"
+                        Name="ref"
+                        Value="AdoNetAppender"
+                        File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                        SelectionLanguage="XPath" />
+
+      </Component>
+    </ComponentGroup>
+
+    <!--Documents-->
+    <ComponentGroup Id ="Documents" Directory="Documents">
+      <Component Id ="Document" Guid="{63440866-ae8c-4756-9ec0-ab2daf317df2}" Win64="yes">
+        <File Id="UserGuide.docx" Source="$(var.Documents)\User Guide.docx"></File>
+        <File Id="Azure.DataCenterMigration_APIDocumentation.chm" Source="$(var.SourceCode)\Azure.DataCenterMigration.APIDocumentation\Help\"></File>
+        <File Id="License.rtf" Source="$(var.Documents)\"></File>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

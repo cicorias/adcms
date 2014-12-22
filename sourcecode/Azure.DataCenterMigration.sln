@@ -1,0 +1,131 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DataCenterMigration.Models", "Azure.DataCenterMigration.Models\Azure.DataCenterMigration.Models.csproj", "{13CAD85E-727F-4EAD-B94B-3E6719589D5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DataCenterMigration", "Azure.DataCenterMigration\Azure.DataCenterMigration.csproj", "{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DataCenterMigration.App", "Azure.DataCenterMigration.App\Azure.DataCenterMigration.App.csproj", "{A587FBBD-E6CD-48C7-8349-E10FF00E2092}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1D51CE7F-1731-4298-9856-90A673559512}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Azure.DataCenterMigration.x64Installer", "Azure.DataCenterMigration.x64Installer\Azure.DataCenterMigration.x64Installer.wixproj", "{972BC342-6871-4AEE-9CFB-878A68D79445}"
+	ProjectSection(ProjectDependencies) = postProject
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40} = {43BABC25-250A-44EC-B673-7F2EF9BA8F40}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DataCenterMigration.DatabaseLogSetup", "Azure.DataCenterMigration.DatabaseLogSetup\Azure.DataCenterMigration.DatabaseLogSetup.csproj", "{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{DCD65DBE-F68E-4E2B-AAF1-FE831F089DEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DataCenterMigration.VerifySQLConnection", "Azure.DataCenterMigration.VerifySQLConnection\Azure.DataCenterMigration.VerifySQLConnection.csproj", "{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}"
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Azure.DataCenterMigration.APIDocumentation", "Azure.DataCenterMigration.APIDocumentation\Azure.DataCenterMigration.APIDocumentation.shfbproj", "{43BABC25-250A-44EC-B673-7F2EF9BA8F40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellCmdlets", "PowerShellCmdlets", "{0D7F1A9B-2D73-4316-89A8-2F8029347FB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.DataCenterMigration", "Azure.DataCenterMigration", "{54A43001-BE05-4A2A-8D4B-BF2CB71BF087}"
+	ProjectSection(SolutionItems) = preProject
+		PowerShellCmdlets\Azure.DataCenterMigration\Azure.DataCenterMigration.psm1 = PowerShellCmdlets\Azure.DataCenterMigration\Azure.DataCenterMigration.psm1
+		PowerShellCmdlets\Azure.DataCenterMigration\Constants.ps1 = PowerShellCmdlets\Azure.DataCenterMigration\Constants.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{13CAD85E-727F-4EAD-B94B-3E6719589D5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1C2A29C-0A2F-4CC1-9898-C35EE886D901}.Release|x86.ActiveCfg = Release|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A587FBBD-E6CD-48C7-8349-E10FF00E2092}.Release|x86.ActiveCfg = Release|Any CPU
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Debug|x86.ActiveCfg = Debug|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Debug|x86.Build.0 = Debug|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Release|Any CPU.ActiveCfg = Release|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Release|Mixed Platforms.Build.0 = Release|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Release|x86.ActiveCfg = Release|x86
+		{972BC342-6871-4AEE-9CFB-878A68D79445}.Release|x86.Build.0 = Release|x86
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Debug|x86.ActiveCfg = Debug|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Debug|x86.Build.0 = Debug|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Release|Any CPU.ActiveCfg = Release|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Release|x86.ActiveCfg = Release|x86
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F}.Release|x86.Build.0 = Release|x86
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{972BC342-6871-4AEE-9CFB-878A68D79445} = {DCD65DBE-F68E-4E2B-AAF1-FE831F089DEC}
+		{6526A1AE-59FC-4DBD-B24C-7219BDC0EA2A} = {DCD65DBE-F68E-4E2B-AAF1-FE831F089DEC}
+		{DCA90369-092C-49A2-9F2A-B1C6D2142C3F} = {DCD65DBE-F68E-4E2B-AAF1-FE831F089DEC}
+		{43BABC25-250A-44EC-B673-7F2EF9BA8F40} = {DCD65DBE-F68E-4E2B-AAF1-FE831F089DEC}
+		{54A43001-BE05-4A2A-8D4B-BF2CB71BF087} = {0D7F1A9B-2D73-4316-89A8-2F8029347FB0}
+	EndGlobalSection
+EndGlobal

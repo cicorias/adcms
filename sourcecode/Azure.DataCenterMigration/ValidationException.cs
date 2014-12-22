@@ -1,0 +1,58 @@
+﻿/*******************************************************************************
+ * Copyright 2014 Persistent Systems Ltd.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Azure.DataCenterMigration
+{
+    /// <summary>
+    /// Custom exception class for validation purpose.
+    /// </summary>
+    [Serializable]    
+    public class ValidationException : ApplicationException
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ValidationException() { }
+
+        /// <summary>
+        /// Constructor with message parameter
+        /// </summary>
+        /// <param name="message">Exception message</param>
+        public ValidationException(string message) : base(message) { }
+
+        /// <summary>
+        /// Constructor with message and inner exception parameter
+        /// </summary>
+        /// <param name="message">Exception message</param>
+        /// <param name="inner">Inner exception</param>
+        public ValidationException(string message, Exception inner) : base(message, inner) { }
+
+        /// <summary>
+        /// Constructor with SerializationInfo and StreamingContext parameter
+        /// </summary>
+        /// <param name="info">Serialization info</param>
+        /// <param name="context">Streaming context</param>
+        protected ValidationException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
+}

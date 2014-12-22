@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BytesCopied" xml:space="preserve">
+    <value>{0}/{1} bytes copied</value>
+  </data>
+  <data name="CheckServiceNameAvailabilityFromMSAzureCompleted" xml:space="preserve">
+    <value>Checked cloud service name {0} availability from Microsoft Azure for subscription</value>
+  </data>
+  <data name="CheckServiceNameAvailabilityFromMSAzureStarted" xml:space="preserve">
+    <value>Checking cloud service name {0} availability from Microsoft Azure for subscription</value>
+  </data>
+  <data name="CheckStorageNameAvailabilityFromMSAzureCompleted" xml:space="preserve">
+    <value>Checked storage name {0} availability from Microsoft Azure for subscription</value>
+  </data>
+  <data name="CheckStorageNameAvailabilityFromMSAzureStarted" xml:space="preserve">
+    <value>Checking storage name {0} availability from Microsoft Azure for subscription</value>
+  </data>
+  <data name="CompletedServices" xml:space="preserve">
+    <value>{0} of {1} service along with it's deployment completed</value>
+  </data>
+  <data name="CompletedStages" xml:space="preserve">
+    <value>Stage {0} of {1} completed...</value>
+  </data>
+  <data name="CopyBlobProgressInPercentage" xml:space="preserve">
+    <value>Progress : {0} =&gt; {1:0.##} %</value>
+  </data>
+  <data name="CopyBlobToDestinationCompleted" xml:space="preserve">
+    <value>Copy Blob execution completed : ContainerName: {0} , Blob Name: {1}, Storage Account Name {2} in ({3}:{4}:{5}:{6})</value>
+  </data>
+  <data name="CopyBlobToDestinationStarted" xml:space="preserve">
+    <value>Copy Blob execution started : ContainerName: {0} , Blob Name: {1}, Storage Account Name {2}</value>
+  </data>
+  <data name="CreateAffinityGroups" xml:space="preserve">
+    <value>Creating Affinity Groups...</value>
+  </data>
+  <data name="CreateCloudServices" xml:space="preserve">
+    <value>Creating Cloud Services and it's Deployments...</value>
+  </data>
+  <data name="CreateStorageAccounts" xml:space="preserve">
+    <value>Creating Storage Accounts...</value>
+  </data>
+  <data name="CreateVirtualNetworks" xml:space="preserve">
+    <value>Creating Virtual Networks...</value>
+  </data>
+  <data name="ExecutionCompleted" xml:space="preserve">
+    <value>Execution Completed</value>
+  </data>
+  <data name="ExecutionCompletedWithTime" xml:space="preserve">
+    <value>Execution Completed in ({0}:{1}:{2}:{3})</value>
+  </data>
+  <data name="ExecutionStarted" xml:space="preserve">
+    <value>Execution Started</value>
+  </data>
+  <data name="ExportAffinityGroupCompleted" xml:space="preserve">
+    <value>Exported affinity groups </value>
+  </data>
+  <data name="ExportAffinityGroupStarted" xml:space="preserve">
+    <value>Exporting affinity groups</value>
+  </data>
+  <data name="ExportCloudServiceCompleted" xml:space="preserve">
+    <value>Cloud service '{0}' exported successfully</value>
+  </data>
+  <data name="ExportCloudServicesStarted" xml:space="preserve">
+    <value>Exporting cloud services</value>
+  </data>
+  <data name="ExportCloudServiceStarted" xml:space="preserve">
+    <value>Exporting cloud service '{0}'</value>
+  </data>
+  <data name="ExportDataCenterCompleted" xml:space="preserve">
+    <value>Exported resources for data center '{0}'</value>
+  </data>
+  <data name="ExportDataCenterStarted" xml:space="preserve">
+    <value>Exporting resources for data center '{0}'</value>
+  </data>
+  <data name="ExportDeploymentCompleted" xml:space="preserve">
+    <value>Deployment details '{0}' exported susccessfully for service '{1}'</value>
+  </data>
+  <data name="ExportDeploymentStarted" xml:space="preserve">
+    <value>Exporting deployment details '{0}' for service '{1}'</value>
+  </data>
+  <data name="ExportMetadataCompleted" xml:space="preserve">
+    <value>Metadata exported at location '{0}'</value>
+  </data>
+  <data name="ExportMetadataStarted" xml:space="preserve">
+    <value>Exporting metadata... </value>
+  </data>
+  <data name="ExportStorageAccountCompleted" xml:space="preserve">
+    <value>Exported all storage accounts</value>
+  </data>
+  <data name="ExportStorageAccountStarted" xml:space="preserve">
+    <value>Exporting all storage accounts</value>
+  </data>
+  <data name="ExportVirtualMachineCompleted" xml:space="preserve">
+    <value>Exported virtual machine for cloud service '{0}'</value>
+  </data>
+  <data name="ExportVirtualMachineStarted" xml:space="preserve">
+    <value>Exporting virtual machine for cloud service '{0}'</value>
+  </data>
+  <data name="ExportVNetConfigurationCompleted" xml:space="preserve">
+    <value>Exported virtual network configuration file</value>
+  </data>
+  <data name="ExportVNetConfigurationStarted" xml:space="preserve">
+    <value>Exporting virtual network configuration file</value>
+  </data>
+  <data name="GetAffinityGroupsFromMSAzureCompleted" xml:space="preserve">
+    <value>Received affinity groups from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetAffinityGroupsFromMSAzureStarted" xml:space="preserve">
+    <value>Getting affinity groups from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetServicesFromMSAzureCompleted" xml:space="preserve">
+    <value>Received cloud services from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetServicesFromMSAzureStarted" xml:space="preserve">
+    <value>Getting cloud services from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetStorageAccountKeysCompleted" xml:space="preserve">
+    <value>Received storage account key from Microsoft Azure for account {0}</value>
+  </data>
+  <data name="GetStorageAccountKeysStarted" xml:space="preserve">
+    <value>Getting storage account key from Microsoft Azure for account {0}</value>
+  </data>
+  <data name="GetStorageAccountsFromMSAzureCompleted" xml:space="preserve">
+    <value>Received storage account from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetStorageAccountsFromMSAzureStarted" xml:space="preserve">
+    <value>Getting storage accounts from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetVirtualNetworkConfigFromMSAzureCompleted" xml:space="preserve">
+    <value>Received virtual network configuration from Microsoft Azure for subscription</value>
+  </data>
+  <data name="GetVirtualNetworkConfigFromMSAzureStarted" xml:space="preserve">
+    <value>Getting virtual network configuration from Microsoft Azure for subscription</value>
+  </data>
+  <data name="ImportAffinityGroupCompleted" xml:space="preserve">
+    <value>Affinity group '{0}' created successfully in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="ImportAffinityGroupFailed" xml:space="preserve">
+    <value>Affinity group creation failed with status : '{0}'</value>
+  </data>
+  <data name="ImportAffinityGroupStarted" xml:space="preserve">
+    <value>Creating affinity group '{0}' in destination subscription.</value>
+  </data>
+  <data name="ImportDataCenterStarted" xml:space="preserve">
+    <value>Importing resources to data center '{0}'</value>
+  </data>
+  <data name="ImportDeploymentCompleted" xml:space="preserve">
+    <value>Deployment '{0}' completed for VM :  {1} in ({2}:{3}:{4}:{5})</value>
+  </data>
+  <data name="ImportDeploymentStarted" xml:space="preserve">
+    <value>Deployment '{0}' started for VM :  {1}.</value>
+  </data>
+  <data name="ImportMetadataCompleted" xml:space="preserve">
+    <value>Metadata Imported successfully,</value>
+  </data>
+  <data name="ImportMetadataStarted" xml:space="preserve">
+    <value>Importing metadata from file '{0}' .. </value>
+  </data>
+  <data name="ImportServiceCompleted" xml:space="preserve">
+    <value>Service '{0}' created successfully in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="ImportServiceFailed" xml:space="preserve">
+    <value>Service creation failed with status : '{0}'</value>
+  </data>
+  <data name="ImportServiceStarted" xml:space="preserve">
+    <value>Creating service '{0}' in destination subscription.</value>
+  </data>
+  <data name="ImportStorageAccountCompleted" xml:space="preserve">
+    <value>Storage account '{0}' created successfully in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="ImportStorageAccountFailed" xml:space="preserve">
+    <value>Storage account creation failed with status : '{0}'</value>
+  </data>
+  <data name="ImportStorageAccountStarted" xml:space="preserve">
+    <value>Creating storage account '{0}' in destination subscription.</value>
+  </data>
+  <data name="ImportVirtualMachineCompleted" xml:space="preserve">
+    <value>Virtual machine '{0}' created successfully for deployment {1} in ({2}:{3}:{4}:{5})</value>
+  </data>
+  <data name="ImportVirtualMachineFailed" xml:space="preserve">
+    <value>VirtualMachine creation failed with status : '{0}'</value>
+  </data>
+  <data name="ImportVirtualMachineStarted" xml:space="preserve">
+    <value>Creating virtual machine '{0}' in destination subscription for deployment {1}</value>
+  </data>
+  <data name="ImportVirtualNetworkCompleted" xml:space="preserve">
+    <value>Virtual networks created successfully in ({0}:{1}:{2}:{3})</value>
+  </data>
+  <data name="ImportVirtualNetworkStarted" xml:space="preserve">
+    <value>Creating virtual networks in destination subscription.</value>
+  </data>
+  <data name="ParametersValidationCompleted" xml:space="preserve">
+    <value>Validated input parameters</value>
+  </data>
+  <data name="ParameterValidationStarted" xml:space="preserve">
+    <value>Validating input parameters</value>
+  </data>
+  <data name="ResourceName" xml:space="preserve">
+    <value> Name: {0} .  </value>
+  </data>
+  <data name="ResumeImport" xml:space="preserve">
+    <value>Import Status updated at location '{0}'. In case of failure, please provide this file path to resume the import.</value>
+  </data>
+  <data name="RollbackAffinityGroup" xml:space="preserve">
+    <value>Rolled back affinity group : {0}  in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="RollbackAffinityGroups" xml:space="preserve">
+    <value>Deleting all imported affinity groups from subscription</value>
+  </data>
+  <data name="RollbackAffinityGroupsWaiting" xml:space="preserve">
+    <value>Waiting for affinity groups getting released..</value>
+  </data>
+  <data name="RollbackCloudService" xml:space="preserve">
+    <value>Rolled back cloud service : {0} with deployments in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="RollbackCloudServices" xml:space="preserve">
+    <value>Deleting all imported services and their deployments from subscription</value>
+  </data>
+  <data name="RollbackCloudServicesWaiting" xml:space="preserve">
+    <value>Waiting for services and their deployments getting released..</value>
+  </data>
+  <data name="RollbackCompleted" xml:space="preserve">
+    <value>Rolled back all imported resources.</value>
+  </data>
+  <data name="RollbackCompletedStages" xml:space="preserve">
+    <value>Rollback : Stage {0} of {1} completed...</value>
+  </data>
+  <data name="RollbackDeployment" xml:space="preserve">
+    <value>Rolled back Deployment : {0} for cloudservice {1}</value>
+  </data>
+  <data name="RollbackStarted" xml:space="preserve">
+    <value>Error occured hence rolling back all imported resources.</value>
+  </data>
+  <data name="RollbackStorageAccount" xml:space="preserve">
+    <value>Rolled back storage account : {0}  in ({1}:{2}:{3}:{4})</value>
+  </data>
+  <data name="RollbackStorageAccounts" xml:space="preserve">
+    <value>Deleting all imported storage accounts from subscription</value>
+  </data>
+  <data name="RollbackStorageAccountsWaiting" xml:space="preserve">
+    <value>Waiting for dependencies of storages accounts getting released..</value>
+  </data>
+  <data name="RollbackVirtualMachine" xml:space="preserve">
+    <value>Rolled back Virtual Machine : {0}</value>
+  </data>
+  <data name="RollbackVirtualNetwork" xml:space="preserve">
+    <value>Rolled back virtual networks</value>
+  </data>
+  <data name="RollbackVirtualNetworks" xml:space="preserve">
+    <value>Deleting all imported virtual networks from subscription</value>
+  </data>
+  <data name="RollbackVirtualNetworksWaiting" xml:space="preserve">
+    <value>Waiting for virtual networks getting released..</value>
+  </data>
+  <data name="StorageAccountDescription" xml:space="preserve">
+    <value>Storage account created in DC migration process.</value>
+  </data>
+  <data name="ValidateMetadataFileResources" xml:space="preserve">
+    <value>Validating Metadata File Resources...</value>
+  </data>
+  <data name="ValidateSubscriptionCapacity" xml:space="preserve">
+    <value>Validating subscription capacity</value>
+  </data>
+  <data name="ImportDataCenterCompleted" xml:space="preserve">
+    <value>All the resources for data center '{0}' are successfully imported on destination subscription</value>
+  </data>
+  <data name="BlobCopyCompleted" xml:space="preserve">
+    <value>Blob copy completed from {0} to {1}</value>
+  </data>
+  <data name="BlobCopyStarted" xml:space="preserve">
+    <value>Blob copy started from {0} to {1}</value>
+  </data>
+  <data name="CloudBlobInfoRecieved" xml:space="preserve">
+    <value>Recieved blob {0} information of storage account {1}</value>
+  </data>
+  <data name="GetCloudBlobStarted" xml:space="preserve">
+    <value>Getting blob {0} information of storage account {1}</value>
+  </data>
+  <data name="RetryWait" xml:space="preserve">
+    <value>Failure occurred : Retry count {0}</value>
+  </data>
+  <data name="BlobExistsInDestination" xml:space="preserve">
+    <value>Blob is already exist in destination. ContainerName: {0} , Blob Name: {1}, Storage Account Name {2}</value>
+  </data>
+  <data name="CopyAllBlobsToDestination" xml:space="preserve">
+    <value>Copying all blobs to destination...</value>
+  </data>
+  <data name="DeleteNonSuccessBlob" xml:space="preserve">
+    <value>Azure blob copy returned a status of '{0}'
+Deleting the blob from destination.</value>
+  </data>
+  <data name="ShutDownAllVms" xml:space="preserve">
+    <value>Shutting down all virtual machines of source subscription</value>
+  </data>
+  <data name="ShutDownVm" xml:space="preserve">
+    <value>Shutting down virtual machine {0} of source subscription</value>
+  </data>
+  <data name="DeleteAGOnTaskCancelled" xml:space="preserve">
+    <value>Deleting the affinity group {0} as it is started creating and the corresponding thread is got cancelled later.</value>
+  </data>
+  <data name="DeleteCloudServiceOnTaskCancelled" xml:space="preserve">
+    <value>Deleting the cloud service {0} as it is started creating and the corresponding thread is got cancelled later.</value>
+  </data>
+  <data name="DeleteStorageAccountOnTaskCancelled" xml:space="preserve">
+    <value>Deleting the storage account {0} as it is started creating and the corresponding thread is got cancelled later.</value>
+  </data>
+  <data name="DeleteVirtualMachineOnTaskCancelled" xml:space="preserve">
+    <value>Deleting the virtual machine {0} as it is started creating and the corresponding thread is got cancelled later.</value>
+  </data>
+  <data name="GetDeploymentFromMSAzureCompleted" xml:space="preserve">
+    <value>Received Deployment information from Microsoft Azure subscription</value>
+  </data>
+  <data name="GetDeploymentFromMSAzureStarted" xml:space="preserve">
+    <value>Getting Deployment information from Microsoft Azure subscription</value>
+  </data>
+  <data name="GetVirtualMachinesFromMSAzureCompleted" xml:space="preserve">
+    <value>Received virtual machines information from Microsoft Azure subscription</value>
+  </data>
+  <data name="GetVirtualMachinesFromMSAzureStarted" xml:space="preserve">
+    <value>Getting Virtual machines information from Microsoft Azure subscription</value>
+  </data>
+  <data name="DuplicateReservedIPName" xml:space="preserve">
+    <value>The same ReservedIPName has been assigned to muliple services in json file.The same ReservedIPName can not be assigned to muliple services.</value>
+  </data>
+  <data name="MissingReservedIPName" xml:space="preserve">
+    <value>ReservedIpName {0} does not exist in destination subscription. Please create the ReservedIPName before migrating the resources.</value>
+  </data>
+  <data name="OccupiedReservedIpName" xml:space="preserve">
+    <value>ReservedIPName {0} is already assiged to service {1} in destination subscription. The same ReservedIPName can not be assigned to muliple services.</value>
+  </data>
+</root>

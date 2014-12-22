@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ExceptionOccurred" xml:space="preserve">
+    <value>Exception of type {0} occurred : {1}</value>
+  </data>
+  <data name="ExitApplicationMessage" xml:space="preserve">
+    <value>Press Any Key To Exit..</value>
+  </data>
+  <data name="HelpDash" xml:space="preserve">
+    <value>---------------------------------------------------------------</value>
+  </data>
+  <data name="HelpDeltaBackOff" xml:space="preserve">
+    <value>-DeltaBackOff :  (optional) Delta backoff in seconds for 'Exponential Backoff' retry strategy, Default is 90 seconds</value>
+  </data>
+  <data name="HelpDestinationCertificateThumbprint" xml:space="preserve">
+    <value>-DestinationCertificateThumbprint : Certificate thumbprint for source subscription. User needs to provide value for either DestinationPublishSettingsFilePath or DestinationCertificateThumbprint for authentiacation</value>
+  </data>
+  <data name="HelpDestinationDCName" xml:space="preserve">
+    <value>-DestinationDCName : Destination Data Center Name</value>
+  </data>
+  <data name="HelpDestinationPrefixName" xml:space="preserve">
+    <value>-DestinationPrefixName : Destination Prefix Name</value>
+  </data>
+  <data name="HelpDestinationPublishSettingsFilePath" xml:space="preserve">
+    <value>-DestinationPublishSettingsFilePath : Destination PublishSettings file path</value>
+  </data>
+  <data name="HelpDestinationSubscriptionId" xml:space="preserve">
+    <value>-DestinationSubscriptionID : Destination Subscription Id</value>
+  </data>
+  <data name="HelpExportExample" xml:space="preserve">
+    <value>Example :  -Operation "Export" -SourceSubscriptionID "5d14d4a2-8c5a-4fc5-8d7d-86efb48b3a07" -SourceDCName "East Asia" -ExportMetadataFolderPath "D:\\DataCenterMigration" -SourcePublishSettingsFilePath  "D:\\PublishSettings.PublishSettings" -SourceCertificateThumbprint "2180d782768926ee0e5ddbcc6e8d2efa8ddb98c7" -QuietMode "True" -GenerateMapperXml "True" -RetryCount "5" -MinBackoff "3" -MaxBackoff "3" -DeltaBackoff "90"</value>
+  </data>
+  <data name="HelpExportMetadataFolderPath" xml:space="preserve">
+    <value>-ExportMetadataFolderPath : Folder path where the exported metadata file will be saved</value>
+  </data>
+  <data name="HelpForExportFunctionality" xml:space="preserve">
+    <value>Help for Export Functionality : -</value>
+  </data>
+  <data name="HelpForImportFunctionality" xml:space="preserve">
+    <value>Help for Import Functionality : -</value>
+  </data>
+  <data name="HelpForMigrateFunctionality" xml:space="preserve">
+    <value>Help for Migrate Functionality : -</value>
+  </data>
+  <data name="HelpGenerateMapperXml" xml:space="preserve">
+    <value>-GenerateMapperXml : (optional) true if user wants to create mapper xml file for resource name. Default is false.</value>
+  </data>
+  <data name="HelpImportDestinationPrefixName" xml:space="preserve">
+    <value>-DestinationPrefixName : Destination Prefix Name. User needs to provide value for either MapperXmlFilePath or DestinationPrefixName.</value>
+  </data>
+  <data name="HelpImportExample" xml:space="preserve">
+    <value>Example : -Operation "Import" -SourceSubscriptionID "5d14d4a2-8c5a-4fc5-8d7d-86efb48b3a07" -DestinationSubscriptionID "5d14d4a2-8c5a-4fc5-8d7d-86efb48b3a07" -DestinationDCName "West US" -SourcePublishSettingsFilePath "D:\\PublishSettings.PublishSettings"  -SourceCertificateThumbprint "2180d782768926ee0e5ddbcc6e8d2efa8ddb98c7" -DestinationPublishSettingsFilePath "D:\\PublishSettings.PublishSettings" -DestinationCertificateThumbprint "2180d782768926ee0e5ddbcc6e8d2efa8ddb98c7" -ImportMetadataFilePath "D:\\DataCenterMigration\mydata.json" -MapperXmlFilePath "D:\\DataCenterMigration\mydata.xml" -DestinationPrefixName "dc" -RetryCount "5" -MinBackoff "3" -MaxBackoff "3" -DeltaBackoff "90" -QuietMode "True" -RollBackOnFailure "True" -ResumeImport "True"</value>
+  </data>
+  <data name="HelpImportMetadataFilePath" xml:space="preserve">
+    <value>-ImportMetadataFilePath: File path where the metadata is saved</value>
+  </data>
+  <data name="HelpMapperXmlFilePath" xml:space="preserve">
+    <value>-MapperXmlFilePath: File path where the mapper xml is saved</value>
+  </data>
+  <data name="HelpMaxBackoff" xml:space="preserve">
+    <value>-MaxBackoff :  (optional) Maximum backoff in seconds for 'Exponential Backoff' retry strategy, Default is 30 seconds</value>
+  </data>
+  <data name="HelpMigrateExample" xml:space="preserve">
+    <value>Example : -Operation "Migrate" -SourceSubscriptionID "5d14d4a2-8c5a-4fc5-8d7d-86efb48b3a07" -DestinationSubscriptionID "5d14d4a2-8c5a-4fc5-8d7d-86efb48b3a07" -SourceDCName "East Asia" -DestinationDCName "West US" -SourcePublishSettingsFilePath "D:\\PublishSettings.PublishSettings"  -SourceCertificateThumbprint "2180d782768926ee0e5ddbcc6e8d2efa8ddb98c7" -DestinationPublishSettingsFilePath "D:\\PublishSettings.PublishSettings" -DestinationCertificateThumbprint "2180d782768926ee0e5ddbcc6e8d2efa8ddb98c7" -ExportMetadataFolderPath "D:\\DataCenterMigration" -DestinationPrefixName "dc" -RetryCount "5" -MinBackoff "3" -MaxBackoff "3" -DeltaBackoff "90" -QuietMode "True" -RollBackOnFailure "True"</value>
+  </data>
+  <data name="HelpMinBackoff" xml:space="preserve">
+    <value>-MinBackoff :  (optional) Minimum backoff in seconds for 'Exponential Backoff' retry strategy, Default is 30 seconds</value>
+  </data>
+  <data name="HelpQuietMode" xml:space="preserve">
+    <value>-QuietMode : (optional) true if user don't want to print progress messages on console. Default is false.</value>
+  </data>
+  <data name="HelpResumeImport" xml:space="preserve">
+    <value>-ResumeImport : (optional)true if user wants to update import status in the same file. Default is false.</value>
+  </data>
+  <data name="HelpRetryCount" xml:space="preserve">
+    <value>-RetryCount : (optional) No. of times to retry in case of exception, Default is '5'</value>
+  </data>
+  <data name="HelpRollbackOnFailure" xml:space="preserve">
+    <value>-RollBackOnFailure : (optional)true if user wants to rollback all imported resources. Default is false.</value>
+  </data>
+  <data name="HelpSourceCertificateThumbprint" xml:space="preserve">
+    <value>-SourceCertificateThumbprint : Certificate thumbprint for source subscription. User needs to provide value for either SourcePublishSettingsFilePath or SourceCertificateThumbprint for authentiacation</value>
+  </data>
+  <data name="HelpSourceDCName" xml:space="preserve">
+    <value>-SourceDCName : Source Data Center Name</value>
+  </data>
+  <data name="HelpSourcePublishSettingsFilePath" xml:space="preserve">
+    <value>-SourcePublishSettingsFilePath : SourcePublishSettings file path</value>
+  </data>
+  <data name="HelpSourceSubscriptionId" xml:space="preserve">
+    <value>-SourceSubscriptionID : Source Subscription Id</value>
+  </data>
+  <data name="ImportWarning" xml:space="preserve">
+    <value>WARNING : Import process will stop virtual machines of source subscription. Do you want to continue? (Y/N) : </value>
+  </data>
+  <data name="ImportWarningLog" xml:space="preserve">
+    <value>WARNING : Import process will stop virtual machines of source subscription. </value>
+  </data>
+  <data name="InvalidArgumentDeclaration" xml:space="preserve">
+    <value>Invalid syntax. Argument name should be preceded with '-'. </value>
+  </data>
+  <data name="InvalidArgumentName" xml:space="preserve">
+    <value>Invalid argument name : '{0}'.</value>
+  </data>
+  <data name="InvalidNumberOfArguments" xml:space="preserve">
+    <value>Invalid number of arguments.</value>
+  </data>
+  <data name="MissingInputParameters" xml:space="preserve">
+    <value>No input parameters are provided. Pass commandline arguments or provide the values in App.config file.</value>
+  </data>
+  <data name="MissingOperationParameter" xml:space="preserve">
+    <value>-Operation parameter should be define first parameter with value as Export /Import /Migrate</value>
+  </data>
+  <data name="MissingRequiredParameter" xml:space="preserve">
+    <value>Required parameter '{0}' is missing. Define parameter in '{1}' .</value>
+  </data>
+  <data name="SelectValidOption" xml:space="preserve">
+    <value>Please select a valid option (y/n): </value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>Validation Error : {0} </value>
+  </data>
+  <data name="WrongInputForBoolArg" xml:space="preserve">
+    <value>Argument {0} should contain "true" / "false" value only</value>
+  </data>
+</root>

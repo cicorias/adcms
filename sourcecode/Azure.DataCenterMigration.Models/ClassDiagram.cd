@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Azure.DataCenterMigration.Models.AffinityGroup">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AffinityGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azure.DataCenterMigration.Models.CloudService">
+    <Position X="6.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CloudService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azure.DataCenterMigration.Models.DataCenter">
+    <Position X="7.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACAIAAAACAAgAABAAIAQQAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataCenter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azure.DataCenterMigration.Models.Subscription">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAgAAQAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Subscription.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DataCenters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Azure.DataCenterMigration.Models.VirtualMachine">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>VirtualMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkConfiguration" Collapsed="true">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAgAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>NetworkConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
