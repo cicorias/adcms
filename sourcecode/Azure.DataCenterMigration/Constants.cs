@@ -23,7 +23,7 @@ namespace Azure.DataCenterMigration
     /// </summary>
     public static class Constants
     {
-        private static Dictionary<ResourceType, int> resourceNameMaxLength ;
+        private static Dictionary<ResourceType, int> resourceNameMaxLength;
 
         static Constants()
         {
@@ -36,7 +36,7 @@ namespace Azure.DataCenterMigration
             resourceNameMaxLength.Add(DataCenterMigration.ResourceType.VirtualNetworkSite, 63);
             resourceNameMaxLength.Add(DataCenterMigration.ResourceType.Deployment, 63);
             resourceNameMaxLength.Add(DataCenterMigration.ResourceType.VirtualMachine, 63);
-            resourceNameMaxLength.Add(DataCenterMigration.ResourceType.VirtualNetwork, 63);        
+            resourceNameMaxLength.Add(DataCenterMigration.ResourceType.VirtualNetwork, 63);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.DataCenterMigration
         /// Constant to store '.json' string.
         /// </summary>
         internal const string MetadataFileExtension = ".json";
-        
+
         /// <summary>
         /// Constant to store '.xml' string.
         /// </summary>
@@ -448,15 +448,15 @@ namespace Azure.DataCenterMigration
         /// </summary>
         /// <param name="resourceType"></param>
         /// <returns>max lenth allowed for resource type. returns -1 if resource type doesnt match in resourceNameMaxLength dictionary</returns>
-        internal static int GetMaxLengthForResourceType( ResourceType resourceType)
-        {            
-             int maxLength;
-             if (resourceNameMaxLength.TryGetValue(resourceType, out maxLength))
-             {
-                 return maxLength;
-             }
-             else
-                 return -1; 
+        internal static int GetMaxLengthForResourceType(ResourceType resourceType)
+        {
+            int maxLength;
+            if (resourceNameMaxLength.TryGetValue(resourceType, out maxLength))
+            {
+                return maxLength;
+            }
+            else
+                return -1;
         }
     }
 
@@ -464,7 +464,7 @@ namespace Azure.DataCenterMigration
     /// <summary>
     /// Enumeration for resource type to update the resource status in metadata file
     /// </summary>
-     enum ResourceType
+    enum ResourceType
     {
         DataCenter,
         AffinityGroup,
@@ -481,6 +481,6 @@ namespace Azure.DataCenterMigration
         OSDisk,
         HardDisk,
         None
-    };    
+    };
     #endregion
 }

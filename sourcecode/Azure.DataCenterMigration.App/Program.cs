@@ -92,9 +92,8 @@ namespace Azure.DataCenterMigration.App
                     }
                     else
                     {
-                         bool.TryParse(parameters[Constants.Parameters.QuietMode], out isQuietMode);
+                        bool.TryParse(parameters[Constants.Parameters.QuietMode], out isQuietMode);
                     }
-
                     if (isQuietMode || ConfirmContinue())
                     {
                         if (string.Compare(parameters[Constants.Parameters.Operation], Constants.Operations.Import, StringComparison.InvariantCultureIgnoreCase) == 0)

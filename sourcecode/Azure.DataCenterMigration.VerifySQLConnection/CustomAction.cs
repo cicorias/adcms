@@ -1,4 +1,5 @@
-﻿/*******************************************************************************
+﻿using Microsoft.Deployment.WindowsInstaller;
+/*******************************************************************************
  * Copyright 2014 Persistent Systems Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +15,16 @@
  * limitations under the License.
  ******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Deployment.WindowsInstaller;
 using System.Data.SqlClient;
-using System.Security.Principal;
 using System.Windows.Forms;
-using System.IO.Compression;
-using System.IO;
-using System.Diagnostics;
-
 
 namespace Azure.DataCenterMigration.VerifySQLConnection
 {
     /// <summary>
-    /// WIX Custom Action class used for creating Custom Actions to be invoked by the Installer
+    /// WIX Custom Action class used for creating Custom Actions to be invoked by the installer.
     /// </summary>
     public class CustomActions
-    {       
+    {
         /// <summary>
         /// VerifySqlConnection Method tests the connection to the SQL server before proceeding with the installtion if SQL database logging is required
         /// </summary>
@@ -42,11 +34,11 @@ namespace Azure.DataCenterMigration.VerifySQLConnection
         public static ActionResult VerifySqlConnection(Session session)
         {
             try
-            {             
+            {
                 //Constructs the SQL Server Connectionstring 
                 var builder = new SqlConnectionStringBuilder
                 {
-                    DataSource = session[StringConstants.ServerName],                    
+                    DataSource = session[StringConstants.ServerName],
                     ConnectTimeout = 5
                 };
 
@@ -55,14 +47,13 @@ namespace Azure.DataCenterMigration.VerifySQLConnection
                     builder.IntegratedSecurity = true;
                 }
                 else
-                {                    
+                {
                     builder.UserID = session[StringConstants.UserName];
                     builder.Password = session[StringConstants.Password];
                 }
 
                 using (var connection = new SqlConnection(builder.ConnectionString))
                 {
-                   
                     //Invokes Checkconnection method for testing the connectivity to SQL server based on the ConnectionString
                     if (CheckConnection(connection, session))
                     {
@@ -73,20 +64,17 @@ namespace Azure.DataCenterMigration.VerifySQLConnection
                     {
                         session[StringConstants.Odbc_Connection] = string.Empty;
                     }
-                }               
-               
+                }
             }
             catch (Exception ex)
             {
-                
-                MessageBox.Show(ex.Message);                
+
+                MessageBox.Show(ex.Message);
                 throw;
             }
 
             return ActionResult.Success;
         }
-
-      
 
         /// <summary>
         /// CheckConnection method tries to open connection to the SQL server based on the ServerName and the Credentials provided
@@ -114,12 +102,11 @@ namespace Azure.DataCenterMigration.VerifySQLConnection
             catch (SqlException ex)
             {
                 session[StringConstants.Odbc_Error] = ex.Message;
-                
-                MessageBox.Show(StringConstants.UnsuccessfulConnection,StringConstants.MessageHeader);
+
+                MessageBox.Show(StringConstants.UnsuccessfulConnection, StringConstants.MessageHeader);
                 session[StringConstants.Odbc_Error] = "1";
                 return false;
             }
         }
-      
     }
 }
