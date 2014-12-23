@@ -20,8 +20,8 @@
 
   <!--Variables -->
   <?define appName="Azure Data Center Migration 1.0" ?>
+  <?define Root = "..\.."?>
   <?define SourceCode = "..\..\SourceCode"?>
-  <?define Documents = "..\..\Documents"?>
 
   <Product Id="*" Name="$(var.appName)" Language="1033" Version="1.0.0.0" Manufacturer="Persistent Systems Ltd." UpgradeCode="ca471108-8763-4e3b-bf96-310470d940a5" Codepage="1252">
     <Package Id="*" Platform="x64" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" SummaryCodepage="1252"/>
@@ -234,7 +234,7 @@
 
 
     <!--Custom License Agreement -->
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.Documents)\License.rtf" Overridable="yes" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.Root)\License.rtf" Overridable="yes" />
     <!--Set  Installer's Icon in Add/Remove Programs-->
     <Icon Id="icon.ico" SourceFile="WAIcon.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
@@ -482,9 +482,9 @@
     <!--Documents-->
     <ComponentGroup Id ="Documents" Directory="Documents">
       <Component Id ="Document" Guid="{63440866-ae8c-4756-9ec0-ab2daf317df2}" Win64="yes">
-        <File Id="UserGuide.docx" Source="$(var.Documents)\User Guide.docx"></File>
+        <File Id="UserGuide.docx" Source="$(var.Root)\User Guide.docx"></File>
         <File Id="Azure.DataCenterMigration_APIDocumentation.chm" Source="$(var.SourceCode)\Azure.DataCenterMigration.APIDocumentation\Help\"></File>
-        <File Id="License.rtf" Source="$(var.Documents)\"></File>
+        <File Id="License.rtf" Source="$(var.Root)\"></File>
       </Component>
     </ComponentGroup>
   </Fragment>

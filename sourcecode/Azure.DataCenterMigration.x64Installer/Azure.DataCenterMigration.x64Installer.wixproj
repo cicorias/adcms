@@ -99,7 +99,7 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Documents\License.rtf">
+    <Content Include="..\..\License.rtf">
       <Link>License.rtf</Link>
     </Content>
     <Content Include="packages.config" />
