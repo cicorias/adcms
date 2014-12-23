@@ -437,7 +437,7 @@
       <Component Id ="SQLPS" Guid="{4ffb0201-a53a-44a4-b46b-6bb068f347a2}" Win64="yes">
         <Condition>SQL_REQUIRED=1</Condition>
 
-        <util:XmlFile   File="[Bin]\Azure.DataCenterMigration.App.exe.config"
+        <util:XmlFile   File="[PowerShellScriptsBin]\Azure.DataCenterMigration.App.exe.config"
                         Id="Log4netConnectionStringPS"
                         Action="setValue"
                         ElementPath="/configuration/log4net/appender/connectionString/@value"
@@ -445,7 +445,7 @@
                         SelectionLanguage="XPath"
                         Sequence="1"  />
 
-        <util:XmlFile   File="[Bin]\Azure.DataCenterMigration.DatabaseLogSetup.exe.config"
+        <util:XmlFile   File="[PowerShellScriptsBin]\Azure.DataCenterMigration.DatabaseLogSetup.exe.config"
                         Id="Log4netDBConnectionStringPS"
                         Action="setValue"
                         ElementPath="/configuration/connectionStrings/add/@connectionString"
@@ -454,7 +454,7 @@
                         Sequence="1"  />
 
         <util:XmlConfig   Id="AdoNetAppenderPS"
-                          File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                          File= "[PowerShellScriptsBin]\Azure.DataCenterMigration.App.exe.config"
                           Action="delete"
                           ElementPath="/configuration/log4net/root"
                           VerifyPath="/configuration/log4net/root/comment()"
@@ -465,7 +465,7 @@
                         Action="createElement"
                         ElementPath="/configuration/log4net/root"
                         Name="appender-ref"
-                        File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                        File= "[PowerShellScriptsBin]\Azure.DataCenterMigration.App.exe.config"
                         SelectionLanguage="XPath"/>
 
         <util:XmlFile   Id='refPS'
@@ -473,7 +473,7 @@
                         ElementPath="/configuration/log4net/root/appender-ref[\[]not(@ref)[\]]"
                         Name="ref"
                         Value="AdoNetAppender"
-                        File= "[Bin]\Azure.DataCenterMigration.App.exe.config"
+                        File= "[PowerShellScriptsBin]\Azure.DataCenterMigration.App.exe.config"
                         SelectionLanguage="XPath" />
 
       </Component>
