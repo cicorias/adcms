@@ -1,0 +1,5 @@
+packages
+*.suo
+bin
+obj
+/sourcecode/Azure.DataCenterMigration.APIDocumentation/Help
