@@ -94,7 +94,7 @@ namespace Azure.DataCenterMigration
                 if (String.IsNullOrEmpty(importParameters.MapperXmlFilePath))
                 {
                     ResourceNameMapperHelper resourceHelper = new ResourceNameMapperHelper();
-                    importParameters.MapperXmlFilePath = 
+                    importParameters.MapperXmlFilePath =
                         Path.ChangeExtension(importParameters.ImportMetadataFilePath, Constants.MapperFileExtension);
                     File.WriteAllText(importParameters.MapperXmlFilePath,
                         resourceHelper.GenerateMapperXml(destSubscriptionMetadata, importParameters.DestinationPrefixName));
@@ -123,7 +123,7 @@ namespace Azure.DataCenterMigration
 
                 // Validate Metadata file resources.
                 dcMigration.ReportProgress(ProgressResources.ValidateMetadataFileResources);
-                int stageCount = 1;             
+                int stageCount = 1;
                 ChangeAndValidateMetadataFileResources();
 
                 dcMigration.ReportProgress(string.Format(ProgressResources.CompletedStages, stageCount, Constants.ImportTotalStages));
@@ -267,7 +267,6 @@ namespace Azure.DataCenterMigration
             foreach (var affinityGroup in affinityGroups)
             {
                 affinityGroup.AffinityGroupDetails.Name = GetDestinationResourceName(ResourceType.AffinityGroup, affinityGroup.AffinityGroupDetails.Name);
-                affinityGroup.AffinityGroupDetails.Label = null;// affinityGroup.AffinityGroupDetails.Name;
 
                 if (!affinityGroup.IsImported)
                 {
@@ -843,8 +842,8 @@ namespace Azure.DataCenterMigration
                             OperationResponse createAffinityGroupResult = Retry.RetryOperation(() => client.AffinityGroups.Create(
                                 new AffinityGroupCreateParameters
                                 {
-                                    Label = affinityGroup.AffinityGroupDetails.Label,
                                     Description = affinityGroup.AffinityGroupDetails.Description,
+                                    Label = null, // Label is set automatically.
                                     Location = importParameters.DestinationDCName,
                                     Name = affinityGroup.AffinityGroupDetails.Name
                                 }), (BaseParameters)importParameters, ResourceType.AffinityGroup, affinityGroup.AffinityGroupDetails.Name,
@@ -1029,25 +1028,29 @@ namespace Azure.DataCenterMigration
                                 service.CloudServiceDetails.ServiceName);
                             OperationResponse createHostedServiceResult = (service.CloudServiceDetails.Properties.AffinityGroup == null) ?
                             Retry.RetryOperation(() => computeManagementClient.HostedServices.Create(
-                            new HostedServiceCreateParameters
-                            {
-                                Label = null,
-                                ServiceName = service.CloudServiceDetails.ServiceName,
-                                Description = service.CloudServiceDetails.Properties.Description,
-                                Location = importParameters.DestinationDCName,
-                                ExtendedProperties = service.CloudServiceDetails.Properties.ExtendedProperties
-                            }), (BaseParameters)importParameters, ResourceType.CloudService, service.CloudServiceDetails.ServiceName,
-                                () => DeleteCloudServiceIfTaskCancelled(ResourceType.CloudService, service.CloudServiceDetails.ServiceName)) :
-
+                                new HostedServiceCreateParameters
+                                {
+                                    Description = service.CloudServiceDetails.Properties.Description,
+                                    ExtendedProperties = service.CloudServiceDetails.Properties.ExtendedProperties,
+                                    Label = null, // Label is set automatically.
+                                    Location = importParameters.DestinationDCName,
+                                    ReverseDnsFqdn = service.CloudServiceDetails.Properties.ReverseDnsFqdn,
+                                    ServiceName = service.CloudServiceDetails.ServiceName
+                                }),
+                                (BaseParameters)importParameters, ResourceType.CloudService, service.CloudServiceDetails.ServiceName,
+                                () => DeleteCloudServiceIfTaskCancelled(ResourceType.CloudService, service.CloudServiceDetails.ServiceName))
+                                :
                             Retry.RetryOperation(() => computeManagementClient.HostedServices.Create(
-                            new HostedServiceCreateParameters
-                            {
-                                Label = null,
-                                ServiceName = service.CloudServiceDetails.ServiceName,
-                                Description = service.CloudServiceDetails.Properties.Description,
-                                AffinityGroup = service.CloudServiceDetails.Properties.AffinityGroup,
-                                ExtendedProperties = service.CloudServiceDetails.Properties.ExtendedProperties
-                            }), (BaseParameters)importParameters, ResourceType.CloudService, service.CloudServiceDetails.ServiceName,
+                                new HostedServiceCreateParameters
+                                {
+                                    AffinityGroup = service.CloudServiceDetails.Properties.AffinityGroup,
+                                    Description = service.CloudServiceDetails.Properties.Description,
+                                    ExtendedProperties = service.CloudServiceDetails.Properties.ExtendedProperties,
+                                    Label = null, // Label is set automatically.
+                                    ReverseDnsFqdn = service.CloudServiceDetails.Properties.ReverseDnsFqdn,
+                                    ServiceName = service.CloudServiceDetails.ServiceName
+                                }),
+                                (BaseParameters)importParameters, ResourceType.CloudService, service.CloudServiceDetails.ServiceName,
                                 () => DeleteCloudServiceIfTaskCancelled(ResourceType.CloudService, service.CloudServiceDetails.ServiceName));
 
                             UpdateMedatadaFile(ResourceType.CloudService, service.CloudServiceDetails.ServiceName);
@@ -1140,23 +1143,23 @@ namespace Azure.DataCenterMigration
                                 ? Retry.RetryOperation(() => computeManagementClient.StorageAccounts.Create(
                                     new StorageAccountCreateParameters
                                     {
-                                        Name = storageAccount.StorageAccountDetails.Name,
-                                        Label = null,
+                                        AccountType = storageAccount.StorageAccountDetails.Properties.AccountType,
                                         Description = storageAccount.StorageAccountDetails.Properties.Description,
-                                        GeoReplicationEnabled = storageAccount.StorageAccountDetails.Properties.GeoReplicationEnabled,
+                                        ExtendedProperties = storageAccount.StorageAccountDetails.ExtendedProperties,
+                                        Label = null, // Label is set automatically.
                                         Location = importParameters.DestinationDCName,
-                                        ExtendedProperties = storageAccount.StorageAccountDetails.ExtendedProperties
+                                        Name = storageAccount.StorageAccountDetails.Name
                                     }), (BaseParameters)importParameters,
                                     ResourceType.StorageAccount, storageAccount.StorageAccountDetails.Name)
                                     : Retry.RetryOperation(() => computeManagementClient.StorageAccounts.Create(
                                     new StorageAccountCreateParameters
                                     {
-                                        Name = storageAccount.StorageAccountDetails.Name,
-                                        Label = null,
-                                        Description = storageAccount.StorageAccountDetails.Properties.Description,
-                                        GeoReplicationEnabled = storageAccount.StorageAccountDetails.Properties.GeoReplicationEnabled,
+                                        AccountType = storageAccount.StorageAccountDetails.Properties.AccountType,
                                         AffinityGroup = storageAccount.StorageAccountDetails.Properties.AffinityGroup,
-                                        ExtendedProperties = storageAccount.StorageAccountDetails.ExtendedProperties
+                                        Description = storageAccount.StorageAccountDetails.Properties.Description,
+                                        ExtendedProperties = storageAccount.StorageAccountDetails.ExtendedProperties,
+                                        Label = null, // Label is set automatically.
+                                        Name = storageAccount.StorageAccountDetails.Name
                                     }), (BaseParameters)importParameters,
                                     ResourceType.StorageAccount, storageAccount.StorageAccountDetails.Name);
                             UpdateMedatadaFile(ResourceType.StorageAccount, storageAccount.StorageAccountDetails.Name);
@@ -1226,15 +1229,17 @@ namespace Azure.DataCenterMigration
                                     var vhd = new OSVirtualHardDisk
                                     {
                                         HostCaching = virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.HostCaching,
+                                        //IOType is implicitly determined from the MediaLink. This should not be explicitly specified in the request.
+                                        Label = virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.Label,
                                         MediaLink = new Uri(string.Format(CultureInfo.InvariantCulture,
                                             Constants.StorageAccountMediaLink,
                                             accountName, containerName,
                                             virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.MediaLink.Segments.Last()), UriKind.Absolute),
-                                        OperatingSystem = virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.OperatingSystem,
-                                        Label = virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.Label,
                                         Name = string.Format("{0}{1}", importParameters.DestinationPrefixName,
                                         GetDestinationResourceName(ResourceType.OSDisk, virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.Name,
-                                        ResourceType.CloudService, serviceName))
+                                            ResourceType.CloudService, serviceName)),
+                                        OperatingSystem = virtualMachine.VirtualMachineDetails.OSVirtualHardDisk.OperatingSystem,
+                                        //SourceImageName should be set only when creating the virtual machine from an image. Here we create it from a disk.
                                     };
 
                                     // Set up the Data Disk
@@ -1243,16 +1248,19 @@ namespace Azure.DataCenterMigration
                                     {
                                         dataDisks.Add(new DataVirtualHardDisk
                                         {
-                                            SourceMediaLink = new Uri(string.Format(CultureInfo.InvariantCulture,
-                                                Constants.StorageAccountMediaLink,
-                                                accountName, containerName,
-                                                   disk.MediaLink.Segments.Last()), UriKind.Absolute),
-                                            LogicalUnitNumber = disk.LogicalUnitNumber,
-                                            LogicalDiskSizeInGB = disk.LogicalDiskSizeInGB,
-                                            Label = disk.Label,
                                             HostCaching = disk.HostCaching,
+                                            //IOType is implicitly determined from the MediaLink. This should not be explicitly specified in the request.
+                                            Label = disk.Label,
+                                            LogicalDiskSizeInGB = disk.LogicalDiskSizeInGB,
+                                            LogicalUnitNumber = disk.LogicalUnitNumber,
+                                            MediaLink = new Uri(string.Format(CultureInfo.InvariantCulture,
+                                                Constants.StorageAccountMediaLink, accountName, containerName,
+                                                disk.MediaLink.Segments.Last()), UriKind.Absolute),
                                             Name = string.Format("{0}{1}", importParameters.DestinationPrefixName,
-                                            GetDestinationResourceName(ResourceType.HardDisk, disk.Name, ResourceType.CloudService, serviceName))
+                                                GetDestinationResourceName(ResourceType.HardDisk, disk.Name, ResourceType.CloudService, serviceName)),
+                                            SourceMediaLink = new Uri(string.Format(CultureInfo.InvariantCulture,
+                                                Constants.StorageAccountMediaLink, accountName, containerName,
+                                                disk.MediaLink.Segments.Last()), UriKind.Absolute)
                                         });
                                     };
 
@@ -1267,16 +1275,20 @@ namespace Azure.DataCenterMigration
                                         List<Role> roles = new List<Role>();
                                         roles.Add(new Role
                                         {
+                                            AvailabilitySetName = virtualMachine.VirtualMachineDetails.AvailabilitySetName,
+                                            ConfigurationSets = virtualMachine.VirtualMachineDetails.ConfigurationSets,
+                                            DataVirtualHardDisks = dataDisks,
+                                            DefaultWinRmCertificateThumbprint = virtualMachine.VirtualMachineDetails.DefaultWinRmCertificateThumbprint,
+                                            Label = null, // Label is set automatically.
+                                            MediaLocation = virtualMachine.VirtualMachineDetails.MediaLocation,
+                                            OSVersion = virtualMachine.VirtualMachineDetails.OSVersion,
+                                            OSVirtualHardDisk = vhd,
+                                            ProvisionGuestAgent = true,
+                                            ResourceExtensionReferences = virtualMachine.VirtualMachineDetails.ResourceExtensionReferences,
                                             RoleName = virtualMachine.VirtualMachineDetails.RoleName,
                                             RoleSize = virtualMachine.VirtualMachineDetails.RoleSize,
                                             RoleType = virtualMachine.VirtualMachineDetails.RoleType,
-                                            OSVirtualHardDisk = vhd,
-                                            DataVirtualHardDisks = dataDisks,
-                                            ConfigurationSets = virtualMachine.VirtualMachineDetails.ConfigurationSets,
-                                            AvailabilitySetName = virtualMachine.VirtualMachineDetails.AvailabilitySetName,
-                                            DefaultWinRmCertificateThumbprint = virtualMachine.VirtualMachineDetails.DefaultWinRmCertificateThumbprint,
-                                            ProvisionGuestAgent = true,
-                                            ResourceExtensionReferences = virtualMachine.VirtualMachineDetails.ResourceExtensionReferences
+                                            VMImageName = virtualMachine.VirtualMachineDetails.VMImageName
                                         });
 
                                         // Create the deployment parameters
@@ -1284,14 +1296,12 @@ namespace Azure.DataCenterMigration
                                         {
                                             DeploymentSlot = DeploymentSlot.Production,
                                             DnsSettings = deploymentDetails.DnsSettings,
-                                            Name = deploymentDetails.Name,
-                                            Label = deploymentDetails.Label,
-                                            VirtualNetworkName = deploymentDetails.VirtualNetworkName,
-
-                                            ReservedIPName = deploymentDetails.ReservedIPName,
+                                            Label = deploymentDetails.Name, // Set it to new name instead of old deployment label.
                                             LoadBalancers = deploymentDetails.LoadBalancers,
+                                            Name = deploymentDetails.Name,
+                                            ReservedIPName = deploymentDetails.ReservedIPName,
                                             Roles = roles,
-
+                                            VirtualNetworkName = deploymentDetails.VirtualNetworkName
                                         };
                                         var deploymentResult = Retry.RetryOperation(() => computeClient.VirtualMachines.CreateDeployment(
                                             serviceName, createDeploymentParameters), (BaseParameters)importParameters, ResourceType.VirtualMachine,
@@ -1306,14 +1316,16 @@ namespace Azure.DataCenterMigration
                                     {
                                         VirtualMachineCreateParameters parameters = new VirtualMachineCreateParameters
                                         {
+                                            AvailabilitySetName = virtualMachine.VirtualMachineDetails.AvailabilitySetName,
+                                            ConfigurationSets = virtualMachine.VirtualMachineDetails.ConfigurationSets,
+                                            DataVirtualHardDisks = dataDisks,
+                                            MediaLocation = virtualMachine.VirtualMachineDetails.MediaLocation,
+                                            OSVirtualHardDisk = vhd,
+                                            ProvisionGuestAgent = true,
+                                            ResourceExtensionReferences = virtualMachine.VirtualMachineDetails.ResourceExtensionReferences,
                                             RoleName = virtualMachine.VirtualMachineDetails.RoleName,
                                             RoleSize = virtualMachine.VirtualMachineDetails.RoleSize,
-                                            ProvisionGuestAgent = true,
-                                            OSVirtualHardDisk = vhd,
-                                            ConfigurationSets = virtualMachine.VirtualMachineDetails.ConfigurationSets,
-                                            AvailabilitySetName = virtualMachine.VirtualMachineDetails.AvailabilitySetName,
-                                            DataVirtualHardDisks = dataDisks,
-                                            ResourceExtensionReferences = virtualMachine.VirtualMachineDetails.ResourceExtensionReferences
+                                            VMImageName = virtualMachine.VirtualMachineDetails.VMImageName
                                         };
 
                                         Retry.RetryOperation(() => computeClient.VirtualMachines.Create(serviceName, deploymentDetails.Name, parameters),
@@ -1782,7 +1794,7 @@ namespace Azure.DataCenterMigration
         /// <param name="deploymentName">Name of azure service deployment</param>
         /// <param name="virtualMachineName">Name of azure virtual machine</param>
         /// <returns>Virtual machine response for subscription </returns>
-        private VirtualMachineGetResponse GetVirtualMachinesResponseFromMSAzure(SubscriptionCloudCredentials credentials, Uri serviceUrl, 
+        private VirtualMachineGetResponse GetVirtualMachinesResponseFromMSAzure(SubscriptionCloudCredentials credentials, Uri serviceUrl,
             string serviceName, string deploymentName, string virtualMachineName)
         {
             string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
@@ -1925,7 +1937,6 @@ namespace Azure.DataCenterMigration
             }
         }
 
-        
         /// <summary>
         /// Deletes the virtual machine if it is started creating and the corresponding task is got cancelled later.        
         /// </summary>
@@ -1951,7 +1962,6 @@ namespace Azure.DataCenterMigration
                         // Ignore the exception if occurs in cleanup process
                     }
                 }
-
             }
         }
 
@@ -2122,7 +2132,6 @@ namespace Azure.DataCenterMigration
 
 
         #region REST API Calls
-
 
         /// <summary>
         /// Lists the role sizes that are available under the specified subscription.
