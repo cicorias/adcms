@@ -32,7 +32,7 @@ Satish Nikam, Maryann Fernandes, Shubhangi Pote, Neelam Sahu, Divya M
 Rangarajan Srirangam, Guy Bowerman, Suren Machiraju, Yohirito Tada
 
 ##License
-The content of this repository is licensed under the Apache License, Version 2.0. Please find a copy of the license at [License.rtf](/License.rtf).
+The content of this repository is licensed under the Apache License, Version 2.0. Please find a copy of the license [here](/License.txt).
 
 ##Issues / Feedback
 You may report issues or submit feature requests in the [Issues](https://github.com/persistentsystems/adcms/issues) section of this repository. 
