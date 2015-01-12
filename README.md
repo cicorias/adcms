@@ -20,8 +20,9 @@ You can migrate all of the following resources in the source data center:
 * Virtual machines (VMs)
 
 ##User Guide
-Please refer to the [User Guide](/User Guide.docx) for instructions on how the use the solution.
+Please refer to the [User Guide](/User%20Guide.docx?raw=true) for instructions on how the use the solution.
 It also describes the solution architecture and how the solution takes care of important considerations like atomicity, consistency and extensibity.
+You can also take a look at [this video](/videos/adcms_v1.0_demo.mp4?raw=true) to see a working demo of the solution.
 
 ##Contributors
 
